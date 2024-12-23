@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Timestamps</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Comfortaa&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: 'Comfortaa', sans-serif;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      flex-direction: column;
+      padding: 20px;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 40px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    input[type="datetime-local"] {
+      font-size: 18px;
+      padding: 10px;
+      margin: 15px;
+      border-radius: 10px;
+      border: 2px solid #777;
+      background-color: #333;
+      color: white;
+      text-align: center;
+      width: 300px;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    input[type="datetime-local"]:focus {
+      border-color: #aaa;
+      outline: none;
+    }
+    button {
+      font-size: 18px;
+      padding: 10px;
+      background-color: #555;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Comfortaa', sans-serif;
+      width: 300px;
+      box-sizing: border-box;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #888;
+    }
+    .result {
+      font-size: 18px;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #222;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    .result p {
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .result code {
+      background-color: #333;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .copy-button {
+      margin-left: 10px;
+      padding: 5px 10px;
+      font-size: 14px;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .copy-button:hover {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Discord Timestamp Generator</h1>
+  <input type="datetime-local" id="datetime" placeholder="Select date and time">
+  <button onclick="generateTimestamps()">Generate Timestamps</button>
+  <div class="result" id="result" style="display: none;">
+    <p><strong>Short:</strong> <code id="short"></code> <button class="copy-button" onclick="copyToClipboard('short')">Copy</button></p>
+    <p><strong>Relative:</strong> <code id="relative"></code> <button class="copy-button" onclick="copyToClipboard('relative')">Copy</button></p>
+    <p><strong>Full:</strong> <code id="full"></code> <button class="copy-button" onclick="copyToClipboard('full')">Copy</button></p>
+  </div>
+
+  <script>
+    function generateTimestamps() {
+      const datetimeInput = document.getElementById('datetime').value;
+      const resultDiv = document.getElementById('result');
+      const shortSpan = document.getElementById('short');
+      const relativeSpan = document.getElementById('relative');
+      const fullSpan = document.getElementById('full');
+
+      if (!datetimeInput) {
+        alert('Please select a date and time!');
+        return;
+      }
+
+      const timestamp = Math.floor(new Date(datetimeInput).getTime() / 1000); // Convert to Unix timestamp
+
+      // Update the result fields with Discord timestamp formats
+      shortSpan.textContent = `<t:${timestamp}:t>`;
+      relativeSpan.textContent = `<t:${timestamp}:R>`;
+      fullSpan.textContent = `<t:${timestamp}:F>`;
+
+      resultDiv.style.display = 'block'; // Show the result section
+    }
+
+    function copyToClipboard(id) {
+      const text = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert(`Copied: ${text}`);
+      }).catch(err => {
+        alert('Failed to copy text: ' + err);
+      });
+    }
+  </script>
+</body>
+</html>
