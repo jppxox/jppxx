@@ -22,42 +22,22 @@
       position: relative;
     }
 
+    .background {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 50% 50%, rgba(30, 144, 255, 0.2), transparent);
+      z-index: -1; /* Tło pozostaje w tle */
+    }
+
     .particle {
       position: absolute;
+      width: 15px;
+      height: 15px;
+      background: #00bfff;
       border-radius: 50%;
       filter: blur(4px); /* Efekt rozmycia */
       animation: moveParticle 15s infinite ease-in-out;
-    }
-
-    /* Generowanie losowych rozmiarów dla cząsteczek */
-    .particle:nth-child(1) {
-      width: 10px;
-      height: 10px;
-      background: #00bfff;
-    }
-
-    .particle:nth-child(2) {
-      width: 20px;
-      height: 20px;
-      background: #ff4500;
-    }
-
-    .particle:nth-child(3) {
-      width: 15px;
-      height: 15px;
-      background: #32cd32;
-    }
-
-    .particle:nth-child(4) {
-      width: 25px;
-      height: 25px;
-      background: #ff6347;
-    }
-
-    .particle:nth-child(5) {
-      width: 18px;
-      height: 18px;
-      background: #ffa500;
     }
 
     @keyframes moveParticle {
@@ -80,6 +60,7 @@
   </style>
 </head>
 <body>
+  <div class="background"></div> <!-- Statyczne tło -->
   <!-- Particles -->
   <div class="particle" style="top: 10%; left: 20%;"></div>
   <div class="particle" style="top: 50%; left: 80%;"></div>
