@@ -23,7 +23,7 @@
     }
 
     h1 {
-      font-size: 64px;
+      font-size: 10vw; /* Skalowanie czcionki */
       font-weight: 700;
       letter-spacing: 2px;
       background: linear-gradient(90deg, #1e90ff, #00bfff);
@@ -35,12 +35,12 @@
     }
 
     h2 {
-      font-size: 36px;
+      font-size: 5vw; /* Skalowanie czcionki */
       font-weight: 400;
       color: rgba(173, 216, 230, 0.8);
       opacity: 0;
       animation: fadeIn 2s ease-out 0.5s forwards;
-      margin-top: 5px; /* Zmniejszono odstęp między JPPX a Roblox Developer */
+      margin-top: 5px; /* Zmniejszenie odstępu między JPPX a Roblox Developer */
     }
 
     .background {
@@ -48,8 +48,7 @@
       width: 200%;
       height: 200%;
       background: radial-gradient(circle at 50% 50%, rgba(30, 144, 255, 0.2), transparent);
-      animation: rotateBackground 20s linear infinite;
-      z-index: -1;
+      z-index: -1; /* Tło nieruchome */
     }
 
     .particle {
@@ -58,7 +57,7 @@
       height: 15px;
       background: #00bfff;
       border-radius: 50%;
-      filter: blur(4px); /* Dodano efekt rozmycia */
+      filter: blur(4px); /* Efekt rozmycia */
       animation: moveParticle 15s infinite ease-in-out;
     }
 
@@ -70,15 +69,6 @@
       to {
         opacity: 1;
         transform: translateY(0);
-      }
-    }
-
-    @keyframes rotateBackground {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
       }
     }
 
@@ -102,7 +92,7 @@
   </style>
 </head>
 <body>
-  <div class="background"></div>
+  <div class="background"></div> <!-- Statyczne tło -->
   <!-- Particles -->
   <div class="particle" style="top: 10%; left: 20%;"></div>
   <div class="particle" style="top: 50%; left: 80%;"></div>
