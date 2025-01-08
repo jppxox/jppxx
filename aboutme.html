@@ -3,51 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JPPX</title>
-  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+  <title>Background</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Comfortaa', sans-serif;
-      background: black;
-      color: white;
       height: 100vh;
+      overflow: hidden;
+      background: black;
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
       text-align: center;
-      position: relative;
-    }
-
-    h1 {
-      font-size: 10vw; /* Skalowanie czcionki */
-      font-weight: 700;
-      letter-spacing: 2px;
-      background: linear-gradient(90deg, #1e90ff, #00bfff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      opacity: 0;
-      animation: fadeIn 1.5s ease-out forwards;
-      margin: 0;
-    }
-
-    h2 {
-      font-size: 5vw; /* Skalowanie czcionki */
-      font-weight: 400;
-      color: rgba(173, 216, 230, 0.8);
-      opacity: 0;
-      animation: fadeIn 2s ease-out 0.5s forwards;
-      margin-top: 5px; /* Zmniejszenie odstępu między JPPX a Roblox Developer */
+      font-family: 'Comfortaa', sans-serif;
+      flex-direction: column; /* Ustawienie tekstów jeden pod drugim */
     }
 
     .background {
       position: absolute;
-      width: 200%;
-      height: 200%;
+      width: 100%;
+      height: 100%;
       background: radial-gradient(circle at 50% 50%, rgba(30, 144, 255, 0.2), transparent);
-      z-index: -1; /* Tło nieruchome */
+      z-index: -1;
     }
 
     .particle {
@@ -56,8 +35,53 @@
       height: 15px;
       background: #00bfff;
       border-radius: 50%;
-      filter: blur(4px); /* Efekt rozmycia */
+      filter: blur(4px);
       animation: moveParticle 15s infinite ease-in-out;
+    }
+
+    @keyframes moveParticle {
+      0% {
+        transform: translate(0, 0);
+      }
+      25% {
+        transform: translate(20vw, 10vh);
+      }
+      50% {
+        transform: translate(40vw, 20vh);
+      }
+      75% {
+        transform: translate(20vw, 30vh);
+      }
+      100% {
+        transform: translate(0, 0);
+      }
+    }
+
+    h1, h2 {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 64px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #1e90ff, #00bfff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0;
+      animation: fadeIn 1.5s ease-out forwards;
+    }
+
+    h2 {
+      font-size: 36px;
+      font-weight: 400;
+      color: rgba(173, 216, 230, 0.8);
+      opacity: 0;
+      animation: fadeIn 2s ease-out 0.5s forwards;
+      margin-top: 10px; /* Odstęp między h1 a h2 */
     }
 
     @keyframes fadeIn {
@@ -70,28 +94,10 @@
         transform: translateY(0);
       }
     }
-
-    @keyframes moveParticle {
-      0% {
-        transform: translate(20vw, 20vh);
-      }
-      25% {
-        transform: translate(40vw, 20vh);
-      }
-      50% {
-        transform: translate(60vw, 40vh);
-      }
-      75% {
-        transform: translate(40vw, 60vh);
-      }
-      100% {
-        transform: translate(20vw, 80vh);
-      }
-    }
   </style>
 </head>
 <body>
-  <div class="background"></div> <!-- Statyczne tło -->
+  <div class="background"></div>
   <!-- Particles -->
   <div class="particle" style="top: 10%; left: 20%;"></div>
   <div class="particle" style="top: 50%; left: 80%;"></div>
