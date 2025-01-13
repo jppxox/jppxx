@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dupka</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Comfortaa&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: 'Comfortaa', sans-serif;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 50px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    input[type="password"] {
+      font-size: 20px;
+      padding: 15px;
+      margin: 20px;
+      border-radius: 15px;
+      border: 3px solid #777;
+      background-color: #333;
+      color: white;
+      text-align: center;
+      width: 250px;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    input[type="password"]:focus {
+      border-color: #777;
+      outline: none;
+    }
+    button {
+      font-size: 20px;
+      padding: 15px;
+      background-color: #555;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-family: 'Comfortaa', sans-serif;
+      width: 250px;
+      box-sizing: border-box;
+    }
+    button:hover {
+      background-color: #888;
+    }
+    .message {
+      font-size: 24px;
+      display: none;
+      margin-top: 20px;
+    }
+
+    /* Animation: Hiding all controls (password, button, and header) upwards */
+    .animate-controls {
+      animation: moveControlsUp 1s forwards;
+    }
+
+    @keyframes moveControlsUp {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-200px);
+        opacity: 0;
+      }
+    }
+
+    /* Animation: Moving the text upwards */
+    .animate-text {
+      animation: moveTextUp 2s forwards;
+    }
+
+    @keyframes moveTextUp {
+      0% {
+        transform: translateY(0); /* Start from current position */
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-20vh); /* Move text upwards */
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Customizable options: set the password and the text to be displayed
+    const passwordCode = 'uwu'; // Set your desired password here
+    const successText = 'skopiuj mnie ach > https://github.jppx.xyz/aeryks_weganka.png'; // Set the text to display after successful login
+
+  </script>
+
+  <h1>Enter Password</h1>
+  <input type="password" id="password" placeholder="Enter Password" onkeydown="checkEnter(event)">
+  <button onclick="checkPassword()">Submit</button>
+  <div class="message" id="message">
+    <p id="message-text">Hello</p> <!-- Changed pre to p for easy copying -->
+  </div>
+
+  <script>
+    function checkPassword() {
+      var password = document.getElementById('password').value;
+      var message = document.getElementById('message');
+      var controls = document.querySelectorAll('input, button, h1'); // Controls and header
+      var messageText = document.getElementById('message-text');
+
+      // If the password is correct
+      if (password === passwordCode) {
+        // Show the message
+        message.style.display = 'block';
+        messageText.textContent = successText; // Update the displayed text
+        message.classList.add('animate-text'); // Add animation to the text
+
+        // Animation: Hide all controls and header upwards
+        controls.forEach(function(control) {
+          control.classList.add('animate-controls');
+        });
+
+        // After the animation finishes, leave the text on the page
+        setTimeout(function() {
+          // You can add additional text here if needed
+        }, 1000); // Time for animation to finish
+      } else {
+        alert('ty kurwo cziterko');
+      }
+    }
+
+    function checkEnter(event) {
+      if (event.key === 'Enter') {
+        checkPassword(); // Submit the password when the Enter key is pressed
+      }
+    }
+  </script>
+</body>
+</html>
