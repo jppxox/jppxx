@@ -1,0 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+@import url("https://eject37.github.io/DiscordTheme/HideTrash.css");
+@import url("https://eject37.github.io/DiscordTheme/ScrollBar.css");
+@import url("https://eject37.github.io/DiscordTheme/RoundUserPanel.css");
+@import url("https://eject37.github.io/DiscordTheme/OldMicrophone.css");
+@import url("https://eject37.github.io/DiscordTheme/ChangeSearchBarToIcon.css");
+@import url("https://eject37.github.io/DiscordTheme/RegionFlags.css");
+
+:root {
+    --app-bg: url(https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTJjMm0wbDZtcml3dnl6eXFrY2xkOGI3dTE0aWJsa3IxbjNvcnQ5eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/d5PPYjcb3caPTHM3hv/giphy.webp);
+    --blur-bg: 80px;
+    --brightness-bg: 0.3;
+    --border-main: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark {
+    --background-secondary-alt: rgba(255, 255, 255, 0.05);
+    --background-tertiary: var(--background-secondary-alt);
+    --status-danger: rgba(102, 178, 255);
+    --text-link: rgb(125, 170, 233);
+    --background-primary: rgba(245, 245, 245, 0.1);
+    --background-secondary: rgba(255, 255, 255, 0.05);
+    --bg-overlay-chat: rgba(255, 255, 255, 0.05);
+    --button-danger-background: rgba(250, 100, 135, 0.25);
+    --background-modifier-selected: rgba(190, 190, 190, 0.25);
+    --background-floating: rgba(190, 190, 190, 0.25);
+    --status-positive-background: rgba(190, 190, 190, 0.25);
+    --control-brand-foreground-new: rgba(100, 100, 100, 0.8);
+    --text-brand: white;
+}
+
+/* Motyw tła aplikacji */
+body {
+    background: var(--app-bg) no-repeat;
+    background-position: 15%;
+    background-size: 105% 105%;
+}
+
+/* Rozmycie i inne efekty */
+.bg_d4b6c5 {
+    backdrop-filter: blur(var(--blur-bg)) brightness(var(--brightness-bg));
+}
+
+/* Poprawka migania w menu Applications */
+.menu_d90b3d:not(.menu_ad5fac) {
+    backdrop-filter: blur(10px) !important;
+    background: rgba(50, 50, 50, 0.9) !important;
+    transition: background-color 0.2s ease, backdrop-filter 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.menu_d90b3d:not(.menu_ad5fac) .submenu_d90b3d:before {
+    width: calc(100% - 16px);
+    left: 8px;
+    backdrop-filter: none;
+    background: rgba(30, 30, 30, 0.95) !important;
+}
+
+.colorDefault_d90b3d.focused_d90b3d,
+.colorDefault_d90b3d:active {
+    background: rgba(255, 255, 255, 0.15) !important;
+    transition: none !important;
+}
+
+.menu_d90b3d:not(.menu_ad5fac) .submenu_d90b3d {
+    backdrop-filter: blur(5px);
+    background: rgba(40, 40, 40, 0.9) !important;
+    transition: none !important;
+}
+
+/* Inne style */
+.interactive_f5eb4b,
+.member_cbd271 {
+    transition: 0.1s;
+    border-radius: 10px;
+}
+
+.selected_f5eb4b,
+.interactive_f5eb4b:hover {
+    background: linear-gradient(
+        rgba(184, 184, 184, 0.225),
+        rgba(255, 255, 255, 0.144)
+    );
+}
