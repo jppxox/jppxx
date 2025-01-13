@@ -3,75 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="https://i.starlight-foss.org/starlight-icon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://s1.net.starlight-foss.org/projects/uniWeb/starlight.css">
-  <title>Image Uploader</title>
+  <title>Load Testing Script</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #status {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-  <div class="header font-misa">
-    <div class="header-entry"><a href="https://starlight-foss.org">Starlight</a></div>
-    <div class="header-entry"><a href="#">Gallery (Soon)</a></div>
-  </div>
-  <h1 class="font-misa">Image Uploader</h1>
-  <hr>
-
-  <button id="start-spam" class="link-button">Start Spamming</button>
-  <button id="stop-spam" class="link-button">Stop Spamming</button>
-  <p id="status">Files uploaded: <span id="upload-count">0</span></p>
-  <p id="spam-status">Status: <span id="status-message">Not Started</span></p>
+  <h1>Test Obciążeniowy Serwera</h1>
+  <p>Ten skrypt symuluje dużą liczbę żądań HTTP do Twojego serwera. Uruchom test w kontrolowanym środowisku!</p>
+  <button id="startTest">Start Test</button>
+  <button id="stopTest">Stop Test</button>
+  <p id="status">Status: <span id="statusMessage">Nie rozpoczęto testu</span></p>
 
   <script>
-    let spamInterval;
-    let uploadCount = 0;
+    let testInterval;
+    let requestCount = 0;
+    const serverUrl = 'https://yourserver.com/';  // Zmień na swój adres URL
 
-    // Generowanie większych obrazów o wyższej rozdzielczości
-    function generateHighResImage() {
-      return fetch("https://picsum.photos/800/600")
-        .then((response) => response.blob())
-        .then((blob) => new File([blob], `large_random_${Date.now()}.jpg`, { type: blob.type }));
-    }
-
-    // Funkcja do wysyłania obrazu
-    function uploadImage(file) {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("customFileName", `large_random_${Date.now()}`);
-
-      return fetch("/", {
-        method: "POST",
-        body: formData,
+    // Funkcja do wysyłania żądania HTTP
+    function sendRequest() {
+      fetch(serverUrl, {
+        method: 'GET',  // Możesz zmienić metodę na POST, jeśli testujesz formularze
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
-        .then((response) => {
-          if (response.ok) {
-            uploadCount++;
-            document.getElementById("upload-count").textContent = uploadCount;
-            console.log(`Image uploaded successfully: ${response.status}`);
-          } else {
-            console.error(`Failed to upload image: ${response.status}`);
-          }
-        })
-        .catch((err) => {
-          console.error("Upload error:", err);
-        });
+      .then(response => {
+        if (response.ok) {
+          requestCount++;
+          document.getElementById('statusMessage').textContent = `Wysłano ${requestCount} żądań`;
+        } else {
+          console.error('Błąd odpowiedzi z serwera:', response.status);
+        }
+      })
+      .catch(error => {
+        console.error('Błąd w żądaniu:', error);
+      });
     }
 
-    // Obsługa przycisków Start i Stop
-    document.getElementById("start-spam").addEventListener("click", () => {
-      if (spamInterval) return; // Zapobiega wielokrotnemu uruchomieniu
+    // Rozpoczęcie testu
+    document.getElementById('startTest').addEventListener('click', () => {
+      if (testInterval) return; // Zapobiega wielokrotnemu uruchomieniu
 
-      document.getElementById("status-message").textContent = "Spamming in progress..."; // Status spamu
-
-      spamInterval = setInterval(() => {
-        generateHighResImage().then((file) => uploadImage(file));
-      }, 500); // Wysyłanie co 0.5 sekundy
-      console.log("Spamming started...");
+      document.getElementById('statusMessage').textContent = 'Test w toku...';
+      testInterval = setInterval(() => {
+        sendRequest();
+      }, 100);  // Wysyła żądanie co 100ms (możesz dostosować do swoich potrzeb)
     });
 
-    document.getElementById("stop-spam").addEventListener("click", () => {
-      clearInterval(spamInterval);
-      spamInterval = null;
-      document.getElementById("status-message").textContent = "Spamming stopped."; // Status zatrzymania
-      console.log("Spamming stopped.");
+    // Zatrzymanie testu
+    document.getElementById('stopTest').addEventListener('click', () => {
+      clearInterval(testInterval);
+      testInterval = null;
+      document.getElementById('statusMessage').textContent = 'Test zatrzymany';
     });
   </script>
 </body>
