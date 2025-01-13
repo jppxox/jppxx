@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="https://i.starlight-foss.org/starlight-icon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://s1.net.starlight-foss.org/projects/uniWeb/starlight.css">
+  <title>Image Uploader</title>
+</head>
+<body>
+  <div class="header font-misa">
+    <div class="header-entry"><a href="https://starlight-foss.org">Starlight</a></div>
+    <div class="header-entry"><a href="#">Gallery (Soon)</a></div>
+  </div>
+  <h1 class="font-misa">Image Uploader</h1>
+  <hr>
+
+  <button id="start-spam" class="link-button">Start Spamming</button>
+  <button id="stop-spam" class="link-button">Stop Spamming</button>
+
+  <script>
+    let spamInterval;
+
+    function generateRandomImage() {
+      // Pobiera losowy obrazek z Picsum Photos
+      return fetch("https://picsum.photos/200")
+        .then((response) => response.blob())
+        .then((blob) => new File([blob], `random_${Date.now()}.jpg`, { type: blob.type }));
+    }
+
+    function uploadImage(file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("customFileName", `random_${Date.now()}`);
+
+      fetch("/", {
+        method: "POST",
+        body: formData,
+      }).then((response) => {
+        console.log(`Image uploaded: ${response.status}`);
+      }).catch((err) => {
+        console.error("Upload failed:", err);
+      });
+    }
+
+    document.getElementById("start-spam").addEventListener("click", () => {
+      if (spamInterval) return; // Jeśli spam już działa, nic nie rób
+
+      spamInterval = setInterval(() => {
+        generateRandomImage().then((file) => uploadImage(file));
+      }, 1000); // Wysyłanie obrazków co sekundę
+      console.log("Spamming started...");
+    });
+
+    document.getElementById("stop-spam").addEventListener("click", () => {
+      clearInterval(spamInterval);
+      spamInterval = null;
+      console.log("Spamming stopped.");
+    });
+  </script>
+</body>
+</html>
