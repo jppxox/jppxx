@@ -17,38 +17,50 @@
 
   <button id="start-spam" class="link-button">Start Spamming</button>
   <button id="stop-spam" class="link-button">Stop Spamming</button>
+  <p id="status">Files uploaded: <span id="upload-count">0</span></p>
 
   <script>
     let spamInterval;
+    let uploadCount = 0;
 
+    // Funkcja do generowania losowego obrazu
     function generateRandomImage() {
-      // Pobiera losowy obrazek z Picsum Photos
       return fetch("https://picsum.photos/200")
         .then((response) => response.blob())
         .then((blob) => new File([blob], `random_${Date.now()}.jpg`, { type: blob.type }));
     }
 
+    // Funkcja do wysyłania obrazu
     function uploadImage(file) {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("customFileName", `random_${Date.now()}`);
 
-      fetch("/", {
+      return fetch("/", {
         method: "POST",
         body: formData,
-      }).then((response) => {
-        console.log(`Image uploaded: ${response.status}`);
-      }).catch((err) => {
-        console.error("Upload failed:", err);
-      });
+      })
+        .then((response) => {
+          if (response.ok) {
+            uploadCount++;
+            document.getElementById("upload-count").textContent = uploadCount;
+            console.log(`Image uploaded successfully: ${response.status}`);
+          } else {
+            console.error(`Failed to upload image: ${response.status}`);
+          }
+        })
+        .catch((err) => {
+          console.error("Upload error:", err);
+        });
     }
 
+    // Obsługa przycisków Start i Stop
     document.getElementById("start-spam").addEventListener("click", () => {
-      if (spamInterval) return; // Jeśli spam już działa, nic nie rób
+      if (spamInterval) return; // Zapobiega wielokrotnemu uruchomieniu
 
       spamInterval = setInterval(() => {
         generateRandomImage().then((file) => uploadImage(file));
-      }, 1000); // Wysyłanie obrazków co sekundę
+      }, 1000); // Wysyłanie co sekundę
       console.log("Spamming started...");
     });
 
