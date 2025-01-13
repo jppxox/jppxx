@@ -18,23 +18,24 @@
   <button id="start-spam" class="link-button">Start Spamming</button>
   <button id="stop-spam" class="link-button">Stop Spamming</button>
   <p id="status">Files uploaded: <span id="upload-count">0</span></p>
+  <p id="spam-status">Status: <span id="status-message">Not Started</span></p>
 
   <script>
     let spamInterval;
     let uploadCount = 0;
 
-    // Funkcja do generowania losowego obrazu
-    function generateRandomImage() {
-      return fetch("https://picsum.photos/200")
+    // Generowanie większych obrazów o wyższej rozdzielczości
+    function generateHighResImage() {
+      return fetch("https://picsum.photos/800/600")
         .then((response) => response.blob())
-        .then((blob) => new File([blob], `random_${Date.now()}.jpg`, { type: blob.type }));
+        .then((blob) => new File([blob], `large_random_${Date.now()}.jpg`, { type: blob.type }));
     }
 
     // Funkcja do wysyłania obrazu
     function uploadImage(file) {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("customFileName", `random_${Date.now()}`);
+      formData.append("customFileName", `large_random_${Date.now()}`);
 
       return fetch("/", {
         method: "POST",
@@ -58,15 +59,18 @@
     document.getElementById("start-spam").addEventListener("click", () => {
       if (spamInterval) return; // Zapobiega wielokrotnemu uruchomieniu
 
+      document.getElementById("status-message").textContent = "Spamming in progress..."; // Status spamu
+
       spamInterval = setInterval(() => {
-        generateRandomImage().then((file) => uploadImage(file));
-      }, 1000); // Wysyłanie co sekundę
+        generateHighResImage().then((file) => uploadImage(file));
+      }, 500); // Wysyłanie co 0.5 sekundy
       console.log("Spamming started...");
     });
 
     document.getElementById("stop-spam").addEventListener("click", () => {
       clearInterval(spamInterval);
       spamInterval = null;
+      document.getElementById("status-message").textContent = "Spamming stopped."; // Status zatrzymania
       console.log("Spamming stopped.");
     });
   </script>
